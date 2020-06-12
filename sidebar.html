@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <p>Необходимо ввести некоторые прогнозируемые параметры матча.</p>
+  <div>
+    Прогноз погоды:
+    <input id='forecast' list='forecasts' size=12 />
+    <datalist id='forecasts'>
+      <option value='очень жарко'>
+      <option value='жарко'>
+      <option value='солнечно'>
+      <option value='облачно'>
+      <option value='пасмурно'>
+      <option value='дождь'>
+      <option value='снег'>
+    </datalist>
+  </div>
+  <div>
+    Прогноз температуры: <input id='temperature' type='text' size=4 />
+  </div>
+  <div>
+    Выигрыш коллизии: <input type='checkbox' id='collision'/>
+  </div>
+  <div>
+    Угадан вид защиты: <input type='checkbox' id='defense'/>
+  </div>
+  <div>
+    Процент зрителей:
+    <input type='text' id='spectators' value='-1' size=5 />
+  </div>
+  <input id="calc-button" type='button' value='Посчитать' onclick='calc();'/>
+  <div>
+    <label for='generate-csv'>Генерировать csv</label>
+    <input type='checkbox' id='generate-csv'/>
+  </div>
+  <p>
+    Стартовая сила: <input type='text' id='result' size=6>
+    <a download='team.csv' id='downloadlink' style='display: none'>Скачать csv</a>
+  </p>
+<script src="sidebar.js"></script>
+</body>
+</html>

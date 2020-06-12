@@ -1,0 +1,35 @@
+{
+
+  "manifest_version": 2,
+  "name": "VSOL start strength calculator",
+  "version": "1.0",
+
+  "description": "Estimate a start team strength.",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "calc@pcstat.ru"
+    }
+  },
+
+  "sidebar_action": {
+    "default_title": "Калькулятор силы",
+    "default_panel": "sidebar.html",
+    "default_icon": "logo.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://virtualsoccer.ru/mng_order.php*"],
+      "js": ["calc.js"]
+    }
+  ],
+
+  "permissions": [
+    "*://127.0.0.1/*",
+    "*://pcstat.ru/*",
+    "storage",
+    "tabs"
+  ]
+
+}
