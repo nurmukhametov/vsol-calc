@@ -26,9 +26,7 @@
   ],
 
   "permissions": [
-    "*://127.0.0.1/*",
     "*://pcstat.ru/*",
-    "storage",
     "tabs"
   ]
 
