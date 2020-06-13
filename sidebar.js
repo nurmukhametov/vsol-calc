@@ -42,11 +42,31 @@ function sendMessageToTabs(tabs) {
       }
 
       document.getElementById("result").value = response.strength;
+      document.getElementById("result").classList.add("calc-marked-output");
     }).catch(onError);
   }
 }
 
+function isEmpty(str) {
+    return (!str || 0 === str.length);
+}
+
+function markedRedOrClean(el) {
+  if (isEmpty(el.value)) {
+    el.classList.add("calc-red-border");
+  } else {
+    el.classList.remove("calc-red-border");
+  }
+}
+
 document.getElementById("calc-button").addEventListener("click", () => {
+  document.getElementById("result").classList.remove("calc-marked-output");
+  document.getElementById("downloadlink").style.display = "none";
+  var forecast = document.getElementById("forecast");
+  var temperature = document.getElementById("temperature");
+  console.log(forecast.value);
+  markedRedOrClean(forecast);
+  markedRedOrClean(temperature);
   browser.tabs.query({
     currentWindow: true,
     active: true
