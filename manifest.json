@@ -1,10 +1,11 @@
 {
 
   "manifest_version": 2,
-  "name": "VSOL start strength calculator",
+  "name": "Калькулятор силы стартового состава во ВСОЛ",
+  "short_name": "Калькулятор",
   "version": "1.0",
 
-  "description": "Estimate a start team strength.",
+  "description": "Подсчитывает силу команды в начале матча",
 
   "browser_specific_settings": {
     "gecko": {
@@ -28,6 +29,8 @@
   "permissions": [
     "*://pcstat.ru/*",
     "tabs"
-  ]
+  ],
+
+  "author": "Alexey Nurmukhametov"
 
 }
