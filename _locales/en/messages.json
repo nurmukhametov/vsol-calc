@@ -1,0 +1,17 @@
+{
+  "extensionName": {
+    "message": "Start strength calculator"
+  },
+  "shortName": {
+    "message": "Calculator"
+  },
+  "extensionDescription": {
+    "message": "Estimate a start strength of team for game in VSOL"
+  },
+  "sidebarTitle": {
+    "message": "Strength calculator"
+  },
+  "author": {
+    "message": "Alexey Nurmukhametov"
+  }
+}

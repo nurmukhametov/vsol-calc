@@ -1,11 +1,11 @@
 {
 
   "manifest_version": 2,
-  "name": "Калькулятор силы стартового состава во ВСОЛ",
-  "short_name": "Калькулятор",
-  "version": "1.0",
+  "name": "__MSG_extensionName__",
+  "short_name": "__MSG_shortName__",
+  "version": "1.1",
 
-  "description": "Подсчитывает силу команды в начале матча",
+  "description": "__MSG_extensionDescription__",
 
   "browser_specific_settings": {
     "gecko": {
@@ -14,7 +14,7 @@
   },
 
   "sidebar_action": {
-    "default_title": "Калькулятор силы",
+    "default_title": "__MSG_sidebarTitle__",
     "default_panel": "sidebar.html",
     "default_icon": "logo.png"
   },
@@ -31,6 +31,7 @@
     "tabs"
   ],
 
-  "author": "Alexey Nurmukhametov"
+  "author": "__MSG_author__",
+  "default_locale": "en"
 
 }
