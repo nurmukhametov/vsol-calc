@@ -3,6 +3,8 @@
 .calc-flex-wrapper {display: flex;min-height: 100vh;flex-direction: column;justify-content: space-between}
 .calc-rows {display: flex;flex-direction: column;justify-content: space-between}
 .calc-columns {display: flex;flex-direction: row;justify-content: space-between;flex-wrap: wrap; align-items: flex-end;}
+.calc-marked-output{border:4px solid #B45618}
+.calc-red-border{border:4px solid red}
 
 .pcs-mintcream{color:#000!important;background-color:#F4F8F2!important;}
 .pcs-sandybrown{color:#fff!important;background-color:#B45618!important;}
