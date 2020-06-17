@@ -13,22 +13,41 @@
     }
   },
 
+  "page_action": {
+    "default_icon": {
+      "32": "logo.png"
+    },
+    "default_title": "Calc_S",
+    "default_popup": "sidebar.html"
+  },
+
   "sidebar_action": {
     "default_title": "__MSG_sidebarTitle__",
     "default_panel": "sidebar.html",
     "default_icon": "logo.png"
   },
 
+  "background": {
+    "scripts": ["browser-polyfill.js", "sidebar.js"],
+    "persistent": false
+  },
+
   "content_scripts": [
     {
       "matches": ["*://virtualsoccer.ru/mng_order.php*"],
-      "js": ["calc.js"]
+      "js": [
+        "browser-polyfill.js",
+        "calc.js",
+        "chrome.js"
+      ]
     }
   ],
 
   "permissions": [
     "*://pcstat.ru/*",
-    "tabs"
+    "tabs",
+    "declarativeContent",
+    "storage"
   ],
 
   "author": "__MSG_author__",

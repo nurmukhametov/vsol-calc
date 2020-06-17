@@ -1,3 +1,25 @@
+browser.storage.local.get("cache_params").then((d) => {
+  console.log("A");
+  console.log(d.cache_params);
+  var params = ["forecast", "temperature", "collision", "defense", "spectators", "gencsv"];
+  for (var i = 0; i < params.length; i++) {
+    if (d.cache_params[params[i]]) {
+      document.getElementById(params[i]).value = d.cache_params[params[i]];
+    }
+  }
+});
+
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.declarativeContent.onPageChanged.addRules([{
+      conditions: [new chrome.declarativeContent.PageStateMatcher({
+        pageUrl: {urlContains: 'virtualsoccer.ru/mng_order.php', schemes: ['https']},
+      })],
+      actions: [new chrome.declarativeContent.ShowPageAction()]
+    }]);
+  });
+});
+
 var textFile = null;
 function make_file(text) {
   var data = new Blob([text], {type: 'text/plain'});
@@ -25,12 +47,14 @@ function sendMessageToTabs(tabs) {
         gencsv: document.getElementById("generate-csv").checked
       };
   console.log(msg);
+  browser.storage.local.set({"cache_params": msg});
   for (let tab of tabs) {
     browser.tabs.sendMessage(
       tab.id,
       msg
     ).then(response => {
       console.log("Message from the content script:");
+      if (response) {
       console.log(response.response);
       console.log(response);
 
@@ -43,9 +67,30 @@ function sendMessageToTabs(tabs) {
 
       document.getElementById("result").value = response.strength;
       document.getElementById("result").classList.add("calc-marked-output");
+      }
     }).catch(onError);
   }
 }
+
+function handleMessage(request, sender, sendResponse) {
+  console.log("Message from the content script: " +
+    request.greeting);
+  var response = request;
+  console.log(response.response);
+  console.log(response);
+
+  if (response.csv) {
+    var link = document.getElementById("downloadlink");
+    link.download = response.team_id.toString() + ".csv";
+    link.href = make_file (response.csv);
+    link.style.display = 'block';
+  }
+
+  document.getElementById("result").value = response.strength;
+  document.getElementById("result").classList.add("calc-marked-output");
+}
+
+chrome.runtime.onMessage.addListener(handleMessage);
 
 function isEmpty(str) {
     return (!str || 0 === str.length);

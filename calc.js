@@ -1012,24 +1012,21 @@ function get_style_vz (sch, pid) {
   return b / nbs.length;
 }
 
-browser.runtime.onMessage.addListener(request => {
-  console.log("Message from the background script:");
-  console.log(request.greeting);
-
-  forecast = request.forecast;
-  temperature = request.temperature;
-  collision = request.collision ? COLLISION_WIN : COLLISION_LOSE;
-  default_school = "sunny"; // or sunny
-  spectators_percent = request.spectators; // -1 is away
-  defense_type_result = request.defense ? DEFENSE_WIN : DEFENSE_LOOSE;
-  csv_save = request.gencsv;
+function calc_strength() {
+  forecast = window.calc_args.forecast;
+  temperature = window.calc_args.temperature;
+  collision = window.calc_args.collision; 
+  default_school = window.calc_args.default_school;
+  spectators_percent = window.calc_args.spectators_percent; 
+  defense_type_result = window.calc_args.defense_type_result; 
+  csv_save = window.calc_args.csv_save;
   csv_content = "";
 
   console.log("Forecast", forecast, temperature);
   console.log("Collision: ", collision, "defense: ", defense_type_result, 
     " spectators_percent: ", spectators_percent);
   console.log("ID, POSITION, RS");
-  
+
   if (csv_save) {
     csv_content += "Forecast;" + forecast + ";\n"
     csv_content += "Temperature;" + temperature + ";\n";
@@ -1154,6 +1151,5 @@ browser.runtime.onMessage.addListener(request => {
 
   console.log(response);
   return Promise.resolve(response);
-});
-
+};
 
