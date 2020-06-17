@@ -28,7 +28,11 @@
   },
 
   "background": {
-    "scripts": ["browser-polyfill.js", "sidebar.js"],
+    "scripts": [
+      "browser-polyfill.js",
+      "sidebar.js",
+      "sidebar-chrome.js"
+    ],
     "persistent": false
   },
 
@@ -38,6 +42,7 @@
       "js": [
         "browser-polyfill.js",
         "calc.js",
+        "weather-table.js",
         "content-chrome.js"
       ]
     }
