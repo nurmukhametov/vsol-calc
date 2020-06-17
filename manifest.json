@@ -38,7 +38,8 @@
       "js": [
         "browser-polyfill.js",
         "calc.js",
-        "chrome.js"
+        "chrome.js",
+        "weather_table.js"
       ]
     }
   ],
