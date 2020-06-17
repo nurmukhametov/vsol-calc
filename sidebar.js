@@ -9,17 +9,6 @@ browser.storage.local.get("cache_params").then((d) => {
   }
 });
 
-chrome.runtime.onInstalled.addListener(function() {
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {urlContains: 'virtualsoccer.ru/mng_order.php', schemes: ['https']},
-      })],
-      actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
-  });
-});
-
 var textFile = null;
 function make_file(text) {
   var data = new Blob([text], {type: 'text/plain'});
@@ -30,6 +19,23 @@ function make_file(text) {
   }
   textFile = window.URL.createObjectURL(data);
   return textFile;
+}
+
+function show_response_in_sidebar (response) {
+  if (response) {
+    console.log(response.response);
+    console.log(response);
+
+    if (response.csv) {
+      var link = document.getElementById("downloadlink");
+      link.download = response.team_id.toString() + ".csv";
+      link.href = make_file (response.csv);
+      link.style.display = 'block';
+    }
+
+    document.getElementById("result").value = response.strength;
+    document.getElementById("result").classList.add("calc-marked-output");
+  }
 }
 
 function onError(error) {
@@ -54,43 +60,10 @@ function sendMessageToTabs(tabs) {
       msg
     ).then(response => {
       console.log("Message from the content script:");
-      if (response) {
-      console.log(response.response);
-      console.log(response);
-
-      if (response.csv) {
-        var link = document.getElementById("downloadlink");
-        link.download = response.team_id.toString() + ".csv";
-        link.href = make_file (response.csv);
-        link.style.display = 'block';
-      }
-
-      document.getElementById("result").value = response.strength;
-      document.getElementById("result").classList.add("calc-marked-output");
-      }
+      show_response_in_sidebar(response);
     }).catch(onError);
   }
 }
-
-function handleMessage(request, sender, sendResponse) {
-  console.log("Message from the content script: " +
-    request.greeting);
-  var response = request;
-  console.log(response.response);
-  console.log(response);
-
-  if (response.csv) {
-    var link = document.getElementById("downloadlink");
-    link.download = response.team_id.toString() + ".csv";
-    link.href = make_file (response.csv);
-    link.style.display = 'block';
-  }
-
-  document.getElementById("result").value = response.strength;
-  document.getElementById("result").classList.add("calc-marked-output");
-}
-
-chrome.runtime.onMessage.addListener(handleMessage);
 
 function isEmpty(str) {
     return (!str || 0 === str.length);
@@ -117,3 +90,21 @@ document.getElementById("calc-button").addEventListener("click", () => {
     active: true
   }).then(sendMessageToTabs).catch(onError);
 });
+
+function handleMessage(request, sender, sendResponse) {
+  console.log("Message from the content script: " + request.greeting);
+  show_response_in_sidebar(request);
+}
+
+chrome.runtime.onMessage.addListener(handleMessage);
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.declarativeContent.onPageChanged.addRules([{
+      conditions: [new chrome.declarativeContent.PageStateMatcher({
+        pageUrl: {urlContains: 'virtualsoccer.ru/mng_order.php', schemes: ['https']},
+      })],
+      actions: [new chrome.declarativeContent.ShowPageAction()]
+    }]);
+  });
+});
+
