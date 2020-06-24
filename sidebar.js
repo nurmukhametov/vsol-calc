@@ -38,6 +38,9 @@ function show_response_in_sidebar (response) {
   }
 }
 
+function sanitize_temperature(v) {
+}
+
 function onError(error) {
   console.error(`Error: ${error}`);
 }
@@ -83,6 +86,7 @@ document.getElementById("calc-button").addEventListener("click", () => {
   var forecast = document.getElementById("forecast");
   var temperature = document.getElementById("temperature");
   console.log(forecast.value);
+  
   markedRedOrClean(forecast);
   markedRedOrClean(temperature);
   browser.tabs.query({
