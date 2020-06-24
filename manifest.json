@@ -20,10 +20,24 @@
     "128": "icons/icon128.png"
   },
 
+  "page_action": {
+    "default_title": "__MSG_shortName__",
+    "default_popup": "sidebar.html"
+  },
+
   "sidebar_action": {
     "default_title": "__MSG_sidebarTitle__",
     "default_panel": "sidebar.html",
     "default_icon": "logo.png"
+  },
+
+  "background": {
+    "scripts": [
+      "browser-polyfill.js",
+      "sidebar.js",
+      "sidebar-chrome.js"
+    ],
+    "persistent": false
   },
 
   "content_scripts": [
@@ -48,6 +62,7 @@
   "permissions": [
     "*://pcstat.ru/*",
     "tabs",
+    "declarativeContent",
     "storage"
   ],
 
