@@ -33,7 +33,7 @@
         "browser-polyfill.js",
         "calc.js",
         "weather-table.js",
-        "content-chrome.js"
+        "content-firefox.js"
       ]
     }
   ],
