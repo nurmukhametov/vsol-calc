@@ -34,11 +34,9 @@ function show_response_in_sidebar (response) {
     }
 
     document.getElementById("result").value = response.strength;
+    document.getElementById("result").classList.remove("pcs-input");
     document.getElementById("result").classList.add("calc-marked-output");
   }
-}
-
-function sanitize_temperature(v) {
 }
 
 function onError(error) {
@@ -72,23 +70,57 @@ function isEmpty(str) {
     return (!str || 0 === str.length);
 }
 
-function markedRedOrClean(el) {
-  if (isEmpty(el.value)) {
-    el.classList.add("calc-red-border");
-  } else {
-    el.classList.remove("calc-red-border");
+function markRed(el) {
+  el.classList.remove("pcs-input");
+  el.classList.add("calc-red-border");
+}
+
+function markClean(el) {
+  el.classList.remove("calc-red-border");
+  el.classList.add("pcs-input");
+}
+
+function sanitize_temperature(v) {
+  var t = parseInt(v);
+  if (isNaN(t)) {
+    return false;
   }
+  if (t < 0 || t > 30) {
+    return false;
+  }
+  return true;
+}
+
+function sanitize_spectators(v) {
+  var t = parseInt(v);
+  if (isNaN(t)) {
+    return false;
+  }
+  if (t < -1 || t > 100) {
+    return false;
+  }
+  return true;
 }
 
 document.getElementById("calc-button").addEventListener("click", () => {
   document.getElementById("result").classList.remove("calc-marked-output");
+  document.getElementById("result").classList.add("pcs-input");
   document.getElementById("downloadlink").style.display = "none";
   var forecast = document.getElementById("forecast");
   var temperature = document.getElementById("temperature");
-  console.log(forecast.value);
-  
-  markedRedOrClean(forecast);
-  markedRedOrClean(temperature);
+  var spectators = document.getElementById("spectators");
+  if (!sanitize_temperature(temperature.value)) {
+    markRed(temperature);
+    return;
+  } else {
+    markClean(temperature)
+  }
+  if (!sanitize_spectators(spectators.value)) {
+    markRed(spectators);
+    return;
+  } else {
+    markClean(spectators)
+  }
   browser.tabs.query({
     currentWindow: true,
     active: true
