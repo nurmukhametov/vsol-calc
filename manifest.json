@@ -47,7 +47,7 @@
         "browser-polyfill.js",
         "calc.js",
         "weather-table.js",
-        "content-firefox.js"
+        "content-chrome.js"
       ]
     },
     {
