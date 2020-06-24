@@ -86,6 +86,9 @@ function sanitize_temperature(v) {
   if (isNaN(t)) {
     return false;
   }
+  if (v.includes("-")) {
+    return false;
+  }
   if (t < 0 || t > 30) {
     return false;
   }
