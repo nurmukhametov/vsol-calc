@@ -41,6 +41,7 @@ function show_response_in_sidebar (response) {
 
 function onError(error) {
   console.error(`Error: ${error}`);
+  console.error("Error:", error);
 }
 
 function sendMessageToTabs(tabs) {
