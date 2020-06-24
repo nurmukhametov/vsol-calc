@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "__MSG_extensionName__",
   "short_name": "__MSG_shortName__",
-  "version": "1.3",
+  "version": "1.5",
 
   "description": "__MSG_extensionDescription__",
 
@@ -20,24 +20,10 @@
     "128": "icons/icon128.png"
   },
 
-  "page_action": {
-    "default_title": "Calc_S",
-    "default_popup": "sidebar.html"
-  },
-
   "sidebar_action": {
     "default_title": "__MSG_sidebarTitle__",
     "default_panel": "sidebar.html",
     "default_icon": "logo.png"
-  },
-
-  "background": {
-    "scripts": [
-      "browser-polyfill.js",
-      "sidebar.js",
-      "sidebar-chrome.js"
-    ],
-    "persistent": false
   },
 
   "content_scripts": [
@@ -55,7 +41,6 @@
   "permissions": [
     "*://pcstat.ru/*",
     "tabs",
-    "declarativeContent",
     "storage"
   ],
 
