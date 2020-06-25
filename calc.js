@@ -1,3 +1,10 @@
+function FindPlayers(b) {
+  for(var a = 0; a < window.wrappedJSObject.numOfRows; a++)
+    if (window.wrappedJSObject.plrdat[a].plr_id == b)
+      return a;
+  return-1
+}
+
 function RS(pos, pid) {
   switch (pos) {
     case "CM": return window.wrappedJSObject.plr_cm[pid]; break;
@@ -305,7 +312,8 @@ function get_captain_ds () {
       } else if (window.wrappedJSObject.plr_sp4_core[id] == 'Ка') {
         level = window.wrappedJSObject.plr_sp4_level;
       }
-      var cap_bs = get_captain_bonus(window.wrappedJSObject.plrdat[window.wrappedJSObject.FindPlayers(pid)].age, level);
+      var plr = FindPlayers(pid);
+      var cap_bs = get_captain_bonus(window.wrappedJSObject.plrdat[plr].age, level);
       return rs * cap_bs / 100;
     }
   }
@@ -1033,7 +1041,7 @@ function calc_strength() {
   }
 
   var gen_captain_ds = get_captain_ds ();
-  
+
   // Get picked players
   var scheme = create_scheme ();
   var start_strength = 0;
