@@ -20,18 +20,12 @@ browser.runtime.onMessage.addListener(request => {
   window.postMessage({ type: "FROM_SCRIPT" }, "*");
 });
 
-function _FindPlayers(player_id) {
-  var left_id = window.wrappedJSObject.find_player_data[player_id];
-  return left_id;
-};
-
-window.addEventListener("message", function(event) { 
+window.addEventListener("message", function(event) {
   //We only accept messages from ourselves
   if (event.source != window) 
     return;
   if (event.data.type && (event.data.type == "FROM_PAGE")) { 
     window.wrappedJSObject = event.data;
-    window.wrappedJSObject.FindPlayers = _FindPlayers;
 
     calc_strength().then(response => {
       browser.runtime.sendMessage(response);
@@ -61,10 +55,6 @@ window.addEventListener("message", function(event) {
               };
             }
           }
-        }
-        var _find_player_data = {};
-        for (var i = 0; i < plr_id.length; i++) {
-          _find_player_data[plr_id[i]] = FindPlayers(plr_id[i]);
         }
         var msg = {
           "type": "FROM_PAGE",
@@ -109,8 +99,7 @@ window.addEventListener("message", function(event) {
           "plr_names": plr_names,
           "plrdat": plrdat,
           "curr": curr,
-          // cache of function request
-          "find_player_data": _find_player_data,
+          "numOfRows": numOfRows,
           // array of selects
           "obj_pos": _obj_pos,
           // value
