@@ -33,9 +33,11 @@ function show_response_in_sidebar (response) {
       link.style.display = 'block';
     }
 
-    document.getElementById("result").value = response.strength;
-    document.getElementById("result").classList.remove("pcs-input");
-    document.getElementById("result").classList.add("calc-marked-output");
+    var result = document.getElementById("result");
+    result.disabled = false;
+    result.value = response.strength;
+    result.classList.remove("pcs-input");
+    result.classList.add("calc-marked-output");
   }
 }
 
@@ -105,6 +107,16 @@ function sanitize_spectators(v) {
   }
   return true;
 }
+
+function disable_result() {
+  document.getElementById("result").disabled = true;
+}
+
+document.getElementById("temperature").addEventListener("input", disable_result);
+document.getElementById("spectators").addEventListener("input", disable_result);
+document.getElementById("forecast").addEventListener("input", disable_result);
+document.getElementById("collision").addEventListener("input", disable_result);
+document.getElementById("defense").addEventListener("input", disable_result);
 
 document.getElementById("calc-button").addEventListener("click", () => {
   document.getElementById("result").classList.remove("calc-marked-output");
