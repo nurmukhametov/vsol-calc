@@ -1,3 +1,9 @@
+// log string saved here
+var debug_log_calc_v = "";
+function debug_log_calc(a) {
+  debug_log_calc_v += JSON.stringify(a) + "\n";
+}
+
 function FindPlayers(b) {
   for(var a = 0; a < window.wrappedJSObject.numOfRows; a++)
     if (window.wrappedJSObject.plrdat[a].plr_id == b)
@@ -45,6 +51,7 @@ function WRS(ns, rs, style_id, forecast, temperature) {
       break;
     default:
       console.log("Incorrect style identificator");
+      debug_log_calc("Incorrect style identificator");
       break;
   }
   var ws = t[ns][forecast][temperature]
@@ -80,6 +87,7 @@ function count_gk_specs(s, l) {
       break;
     default:
       console.log("Incorrect gk spec");
+      debug_log_calc("Incorrect style identificator");
       break;
   }
 }
@@ -142,6 +150,7 @@ function positionBonus(p, id) {
           return 0;
         default:
           console.log("Incorrect position bonus");
+          debug_log_calc("Incorrect style identificator");
           break;
       }
     }
@@ -182,6 +191,7 @@ function get_home_bonus (percent) {
     return 0;
   } else {
     console.log("Incorrect percentage of spectators");
+    debug_log_calc("Incorrect percentage of spectators");
     return 0;
   }
 }
@@ -196,6 +206,7 @@ function get_morale_bonus () {
       return window.wrappedJSObject.rest_bonus;
     default:
       console.log ("Incorrect morale bonus");
+      debug_log_calc("Incorrect morale bonus");
       break;
   }
 }
@@ -247,6 +258,7 @@ function get_leader_ds (p) {
       bns = window.wrappedJSObject.obj_FLB.innerText; break;
     default:
       console.log("Incorrect position");
+      debug_log_calc("Incorrect position");
       bns = '-'; break;
   }
   if (bns == '-') {
@@ -268,6 +280,7 @@ function get_captain_bonus (age, sp_ka_level) {
       return {33: 7, 34: 8}[age];
     } else {
       console.log("Incorrect age of sp_ka_level == 2");
+      debug_log_calc("Incorrect age of sp_ka_level == 2");
       return 0;
     }
   } else if (sp_ka_level == 1) {
@@ -277,6 +290,7 @@ function get_captain_bonus (age, sp_ka_level) {
       return {29: 3, 30: 4, 31: 5, 32: 6, 33: 7, 34: 8}[age];
     } else {
       console.log("Incorrect age of sp_ka_level == 1");
+      debug_log_calc("Incorrect age of sp_ka_level == 1");
       return 0;
     }
   } else if (sp_ka_level == 0) {
@@ -287,6 +301,7 @@ function get_captain_bonus (age, sp_ka_level) {
     }[age];
   } else {
     console.log ("Incorrect sp_ka_level");
+    debug_log_calc ("Incorrect sp_ka_level");
     return 0;
   }
 }
@@ -425,7 +440,10 @@ function create_scheme () {
           res["CDc"] = ["GK", "CDl", "CDr"]
         }
         break;
-      default: console.log("Wrong defenders number"); break;
+      default:
+        console.log("Wrong defenders number");
+        debug_log_calc("Wrong defenders number");
+        break;
     }
     return res;
   }
@@ -444,7 +462,9 @@ function create_scheme () {
           res["CMl"] = ["CMr"];
           res["CMr"] = ["CMl"];
         } else {
-          console.log("Incorrect 2 midfielders tactic"); break;
+          console.log("Incorrect 2 midfielders tactic");
+          debug_log_calc("Incorrect 2 midfielders tactic");
+          break;
         }
         break;
       case 3:
@@ -460,7 +480,9 @@ function create_scheme () {
           res[r] = [c];
           res[c] = [l, r];
         } else {
-          console.log("Incorrect 3 midfielders tactic"); break;
+          console.log("Incorrect 3 midfielders tactic");
+          debug_log_calc("Incorrect 3 midfielders tactic");
+          break;
         }
         break;
       case 4:
@@ -497,7 +519,9 @@ function create_scheme () {
           res["CM"] = ["DM"];
           res["DM"] = ["CM"];
         } else {
-          console.log("Incorrect 4 midfielders tactic"); break;
+          console.log("Incorrect 4 midfielders tactic");
+          debug_log_calc("Incorrect 4 midfielders tactic");
+          break;
         }
         break;
       case 5:
@@ -561,7 +585,9 @@ function create_scheme () {
           res[above] = ["CMl", "CMr"];
           res["CMr"] = ["CMl", above, r];
         } else {
-          console.log("Incorrect 5 midfielders tactic"); break;
+          console.log("Incorrect 5 midfielders tactic");
+          debug_log_calc("Incorrect 5 midfielders tactic");
+          break;
         }
         break;
       case 6:
@@ -619,10 +645,15 @@ function create_scheme () {
           res["CMr"] = ["CMl", above, "DM", r];
           res[above] = ["CMl", "CMr"];
         } else {
-          console.log("Incorrect 6 midfielders tactic"); break;
+          console.log("Incorrect 6 midfielders tactic");
+          debug_log_calc("Incorrect 6 midfielders tactic");
+          break;
         }
         break;
-      default: console.log("Wrong midfielders number"); break;
+      default:
+        console.log("Wrong midfielders number");
+        debug_log_calc("Wrong midfielders number");
+        break;
     }
     return res;
   }
@@ -643,7 +674,9 @@ function create_scheme () {
           res["CFl"] = ["CFr"];
           res["CFr"] = ["CFl"];
         } else {
-          console.log("Incorrect 2 forwards tactic"); break;
+          console.log("Incorrect 2 forwards tactic");
+          debug_log_calc("Incorrect 2 forwards tactic");
+          break;
         }
         break;
       case 3:
@@ -663,7 +696,9 @@ function create_scheme () {
           res["CFc"] = ["CFl", "CFr"];
           res["CFr"] = ["CFc"];
         } else {
-          console.log("Incorrect 3 forwards tactic"); break;
+          console.log("Incorrect 3 forwards tactic");
+          debug_log_calc("Incorrect 3 forwards tactic");
+          break;
         }
         break;
       case 4:
@@ -678,10 +713,15 @@ function create_scheme () {
           res["CFr"] = ["CFl", "RF"];
           res["RF"] = ["CFr"];
         } else {
-          console.log("Incorrect 4 forwards tactic"); break;
+          console.log("Incorrect 4 forwards tactic");
+          debug_log_calc("Incorrect 4 forwards tactic");
+          break;
         }
         break;
-      default: console.log("Wrong forwards number"); break;
+      default:
+        console.log("Wrong forwards number");
+        debug_log_calc("Wrong forwards number");
+        break;
     }
     return res;
   }
@@ -694,11 +734,8 @@ function create_scheme () {
   var fwd = parseInt(formation[3]);
 
   innd = inner_def_nbs (def, pos_str.slice(2, 2*(def+1)));
-  console.log(innd);
   innm = inner_mid_nbs (mid, pos_str.slice(2*(def+1), 2*(def+mid+1)));
-  console.log(innm);
   innf = inner_fwd_nbs (fwd, pos_str.slice(2*(def+mid+1)));
-  console.log(innf);
 
   all = Object.assign({}, innd, innm, innf);
 
@@ -911,7 +948,7 @@ function create_scheme () {
     }
   }
 
-  console.log(all);
+  debug_log_calc(all);
 
   return all;
 }
@@ -1023,11 +1060,6 @@ function calc_strength() {
   csv_save = window.calc_args.csv_save;
   csv_content = "";
 
-  console.log("Forecast", forecast, temperature);
-  console.log("Collision: ", collision, "defense: ", defense_type_result, 
-    " spectators_percent: ", spectators_percent);
-  console.log("ID, POSITION, RS");
-
   if (csv_save) {
     csv_content += "Forecast;" + forecast + ";\n"
     csv_content += "Temperature;" + temperature + ";\n";
@@ -1038,12 +1070,21 @@ function calc_strength() {
     csv_content += "collision_b;home_b;morale_b;defense_b;style_b;vz_b;";
     csv_content += "bonus;almost_s;kib;leader_ds;captain_ds;gamestyle_ds;";
     csv_content += "result_s;\n";
+    debug_log_calc("csv content header generated");
   }
 
   var gen_captain_ds = get_captain_ds ();
+  debug_log_calc("Captain ds calculated");
 
   // Get picked players
-  var scheme = create_scheme ();
+  var scheme;
+  try {
+    scheme = create_scheme ();
+    debug_log_calc("Schema calculated");
+  } catch (e) {
+    debug_log_calc("Scheme failed to calculate");
+  }
+
   var start_strength = 0;
   for (var i = 0; i < 11; i++) {
     var id = window.wrappedJSObject.combo_plr[i];
@@ -1059,8 +1100,8 @@ function calc_strength() {
       ns = window.wrappedJSObject.plr_str[id];
       wrs = WRS(ns, rs, window.wrappedJSObject.plr_styles[id], forecast, temperature);
     }
-    
-    console.log(id, pos, "НС: ", ns, "РС: ", rs, "ПРС: ", wrs);
+
+    debug_log_calc("rs ns wrs for player " + i + " calculated");
     if (csv_save) {
       if (id != -1) {
         csv_content += id + ";" + window.wrappedJSObject.plr_id[id] + ";" + window.wrappedJSObject.plr_names[id] + ";";
@@ -1078,16 +1119,30 @@ function calc_strength() {
       style_b = 0;
     } else {
       spec_b = plrBonus(window.wrappedJSObject.style_index, id);
-      vz_b = get_style_vz (scheme, i);
+      debug_log_calc("spec_b calculated");
+      try {
+        vz_b = get_style_vz (scheme, i);
+        debug_log_calc("vz_b calculated");
+      } catch (e) {
+        vz_b = 0;
+        debug_log_calc("vz_b failed to calculate");
+      }
       style_b = get_style_bonus (window.wrappedJSObject.plr_styles[id]);
+      debug_log_calc("style_b calculated");
     }
     // bonus сыгранность
     sygran_b = parseFloat(window.wrappedJSObject.obj_syb.innerText);
+    debug_log_calc("sygran_b calculated");
     pos_b = positionBonus(pos, i);
+    debug_log_calc("pos_b calculated");
     collision_b = collision_bonuses[window.wrappedJSObject.style_index][collision];
+    debug_log_calc("collision_b calculated");
     home_b = get_home_bonus (spectators_percent);
+    debug_log_calc("home_b calculated");
     morale_b =  get_morale_bonus ();
+    debug_log_calc("morale_b calculated");
     defense_b = get_defense_bonus (defense_type_result, pos);
+    debug_log_calc("defense_b calculated");
   
     var bonus = spec_b;
     bonus += sygran_b;
@@ -1098,13 +1153,8 @@ function calc_strength() {
     bonus += home_b;
     bonus += morale_b;
     bonus += defense_b;
+    debug_log_calc("bonus calculated");
     
-    console.log("  bonus: ", bonus, "spec_bonus: ", spec_b,
-      "sygran: ", sygran_b, "pos_bonus: ", pos_b, 
-      "collision: ", collision_b, "home_bonus: ", home_b, 
-      "morale: ", morale_b, "defense: ", defense_b, "style:", style_b,
-      "vz_b: ", vz_b);
-  
     if (csv_save) {
       csv_content += spec_b + ";" + sygran_b + ";" + pos_b + ";";
       csv_content += collision_b + ";" + home_b + ";" + morale_b + ";";
@@ -1115,19 +1165,20 @@ function calc_strength() {
   
     // TODO! outline from for loop common ds
     var kibonus_ds = parseFloat(window.wrappedJSObject.obj_kibonus.innerText);
+    debug_log_calc("kibonus_ds calculated");
     var leader_ds = get_leader_ds (pos);
+    debug_log_calc("leader_ds calculated");
     var captain_ds = 0;
     if (window.wrappedJSObject.plr_id[id] != parseInt(window.wrappedJSObject.obj_captain.value)) {
       captain_ds = gen_captain_ds;
     }
+    debug_log_calc("captain_ds calculated");
     var gamestyle_ds = get_gamestyle_ds (rs);
+    debug_log_calc("gamestyle_ds calculated");
     var result_s = almost_s + kibonus_ds + leader_ds + captain_ds;
-  
-    console.log("Almost s: ", almost_s);
-    console.log("kib: ", kibonus_ds, "leader_ds: ", leader_ds, 
-      "captain_ds: ", captain_ds, "gamestyle_ds: ", gamestyle_ds);
-    console.log("Result s: ", result_s);
-  
+
+    debug_log_calc("result_s calculated");
+
     if (csv_save) {
       csv_content += almost_s + ";" + kibonus_ds + ";" + leader_ds + ";";
       csv_content += captain_ds + ";" + gamestyle_ds + ";" + result_s + ";\n"
@@ -1137,8 +1188,8 @@ function calc_strength() {
   }
   
   start_strength = parseInt(start_strength);
-  console.log("Start strength: ", start_strength);
-  
+  debug_log_calc("Start strength calculated");
+
   if (csv_save) {
     csv_content += "Start strength;" + start_strength + ";\n";
   }
@@ -1150,7 +1201,8 @@ function calc_strength() {
     csv: csv_content
   };
 
-  console.log(response);
+  debug_log_calc("Send response");
+  debug_log_calc(response);
   return Promise.resolve(response);
 };
 

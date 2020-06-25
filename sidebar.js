@@ -1,12 +1,25 @@
+// log string saved here
+var debug_log_v = "";
+function debug_log(a) {
+  debug_log_v += JSON.stringify(a) + "\n";
+}
+
+function debug_file(text) {
+  var link = document.getElementById("downloadlink");
+  link.download = "debug_log.txt";
+  link.href = make_file(debug_log_v);
+  link.style.display = 'block';
+}
+
 browser.storage.local.get("cache_params").then((d) => {
-  console.log("A");
-  console.log(d.cache_params);
+  debug_log(d.cache_params);
   var params = ["forecast", "temperature", "collision", "defense", "spectators", "gencsv"];
   for (var i = 0; i < params.length; i++) {
     if (d.cache_params[params[i]]) {
       document.getElementById(params[i]).value = d.cache_params[params[i]];
     }
   }
+  debug_log("cached_params setted");
 });
 
 var textFile = null;
@@ -22,15 +35,14 @@ function make_file(text) {
 }
 
 function show_response_in_sidebar (response) {
+  debug_log(response);
   if (response) {
-    console.log(response.response);
-    console.log(response);
-
     if (response.csv) {
       var link = document.getElementById("downloadlink");
       link.download = response.team_id.toString() + ".csv";
       link.href = make_file (response.csv);
       link.style.display = 'block';
+      debug_log("Show download link with csv");
     }
 
     var result = document.getElementById("result");
@@ -38,12 +50,16 @@ function show_response_in_sidebar (response) {
     result.value = response.strength;
     result.classList.remove("pcs-input");
     result.classList.add("calc-marked-output");
+    debug_log("Show strength result");
   }
 }
 
 function onError(error) {
   console.error(`Error: ${error}`);
   console.error("Error:", error);
+  debug_log("Received error:");
+  debug_log(error.toString());
+  debug_file();
 }
 
 function sendMessageToTabs(tabs) {
@@ -56,21 +72,18 @@ function sendMessageToTabs(tabs) {
         spectators: parseInt(document.getElementById("spectators").value),
         gencsv: document.getElementById("generate-csv").checked
       };
-  console.log(msg);
+  debug_log(msg);
   browser.storage.local.set({"cache_params": msg});
   for (let tab of tabs) {
+    debug_log("Send message to tab " + tab.id + " background script");
     browser.tabs.sendMessage(
       tab.id,
       msg
     ).then(response => {
-      console.log("Message from the content script:");
+      debug_log("Got message from the content script:");
       show_response_in_sidebar(response);
     }).catch(onError);
   }
-}
-
-function isEmpty(str) {
-    return (!str || 0 === str.length);
 }
 
 function markRed(el) {
@@ -119,26 +132,39 @@ document.getElementById("collision").addEventListener("input", disable_result);
 document.getElementById("defense").addEventListener("input", disable_result);
 
 document.getElementById("calc-button").addEventListener("click", () => {
-  document.getElementById("result").classList.remove("calc-marked-output");
-  document.getElementById("result").classList.add("pcs-input");
-  document.getElementById("downloadlink").style.display = "none";
-  var forecast = document.getElementById("forecast");
-  var temperature = document.getElementById("temperature");
-  var spectators = document.getElementById("spectators");
-  if (!sanitize_temperature(temperature.value)) {
-    markRed(temperature);
-    return;
-  } else {
-    markClean(temperature)
+  debug_log_v = "";
+  try {
+    debug_log("click handler called");
+    document.getElementById("result").classList.remove("calc-marked-output");
+    document.getElementById("result").classList.add("pcs-input");
+    document.getElementById("downloadlink").style.display = "none";
+
+    var temperature = document.getElementById("temperature");
+    if (!sanitize_temperature(temperature.value)) {
+      debug_log("temperature sanitization failed");
+      markRed(temperature);
+      return;
+    } else {
+      debug_log("temperature sanitization passed");
+      markClean(temperature)
+    }
+
+    var spectators = document.getElementById("spectators");
+    if (!sanitize_spectators(spectators.value)) {
+      debug_log("spectators sanitization failed");
+      markRed(spectators);
+      return;
+    } else {
+      debug_log("spectators sanitization passed");
+      markClean(spectators)
+    }
+
+    browser.tabs.query({
+      currentWindow: true,
+      active: true
+    }).then(sendMessageToTabs).catch(onError);
+  } catch (e) {
+    debug_log(e);
+    debug_file();
   }
-  if (!sanitize_spectators(spectators.value)) {
-    markRed(spectators);
-    return;
-  } else {
-    markClean(spectators)
-  }
-  browser.tabs.query({
-    currentWindow: true,
-    active: true
-  }).then(sendMessageToTabs).catch(onError);
 });
