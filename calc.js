@@ -1,7 +1,11 @@
 // log string saved here
 var debug_log_calc_v = "";
 function debug_log_calc(a) {
-  debug_log_calc_v += JSON.stringify(a) + "\n";
+  if (a instanceof Error) {
+    debug_log_calc_v += a.toString() + "\n";
+  } else {
+    debug_log_calc_v += JSON.stringify(a) + "\n";
+  }
 }
 
 function FindPlayers(b) {

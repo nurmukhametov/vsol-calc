@@ -1,7 +1,11 @@
 // log string saved here
 var debug_log_v = "";
 function debug_log(a) {
-  debug_log_v += JSON.stringify(a) + "\n";
+  if (a instanceof Error) {
+    debug_log_calc_v += a.toString() + "\n";
+  } else {
+    debug_log_calc_v += JSON.stringify(a) + "\n";
+  }
 }
 
 function debug_file(text) {
