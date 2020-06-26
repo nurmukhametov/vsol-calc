@@ -191,6 +191,7 @@ document.getElementById("calc-button").addEventListener("click", () => {
     document.getElementById("downloadlink").style.display = "none";
     document.getElementById("debuglog").style.display = 'none';
     document.getElementById("temperature-range-error").style.display = 'none';
+    document.getElementById("result").value = "";
 
     var temperature = document.getElementById("temperature");
     var forecast = document.getElementById("forecast");
