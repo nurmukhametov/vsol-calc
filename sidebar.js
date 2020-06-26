@@ -81,7 +81,10 @@ function sendMessageToTabs(tabs) {
   debug_log(msg);
   browser.storage.local.set({"cache_params": msg});
   for (let tab of tabs) {
-    debug_log("Send message to tab " + tab.id + " background script");
+    debug_log("Send message to a background script of " + tab.url);
+    if (!tab.url.includes("virtualsoccer.ru/mng_order.php")) {
+      throw "Extension was launched on the incorrect tab";
+    }
     browser.tabs.sendMessage(
       tab.id,
       msg
