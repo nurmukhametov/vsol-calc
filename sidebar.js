@@ -2,9 +2,9 @@
 var debug_log_v = "";
 function debug_log(a) {
   if (a instanceof Error) {
-    debug_log_calc_v += a.toString() + "\n";
+    debug_log_v += a.toString() + "\n";
   } else {
-    debug_log_calc_v += JSON.stringify(a) + "\n";
+    debug_log_v += JSON.stringify(a) + "\n";
   }
 }
 
