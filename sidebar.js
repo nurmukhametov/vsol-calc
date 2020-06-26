@@ -108,7 +108,7 @@ function markMarked(el) {
   el.classList.add("calc-marked-output");
 }
 
-function sanitize_temperature(v) {
+function sanitize_temperature(v, f) {
   var t = parseInt(v);
   if (isNaN(t)) {
     return false;
@@ -118,6 +118,43 @@ function sanitize_temperature(v) {
   }
   if (t < 0 || t > 30) {
     return false;
+  }
+  switch (f) {
+    case 'солнечно':
+      if (t < 10 || t > 29) {
+        return false;
+      }
+      break;
+    case 'облачно':
+      if (t < 5 || t > 25) {
+        return false;
+      }
+      break;
+    case 'пасмурно':
+      if (t < 1 || t > 20) {
+        return false;
+      }
+      break;
+    case 'очень жарко':
+      if (t < 26 || t > 30) {
+        return false;
+      }
+      break;
+    case 'жарко':
+      if (t < 15 || t > 29) {
+        return false;
+      }
+      break;
+    case 'дождь':
+      if (t < 1 || t > 15) {
+        return false;
+      }
+      break;
+    case 'снег':
+      if (t < 0 || t > 4) {
+        return false;
+      }
+      break;
   }
   return true;
 }
@@ -150,11 +187,14 @@ document.getElementById("calc-button").addEventListener("click", () => {
     markClean(document.getElementById("result"));
     document.getElementById("downloadlink").style.display = "none";
     document.getElementById("debuglog").style.display = 'none';
+    document.getElementById("temperature-range-error").style.display = 'none';
 
     var temperature = document.getElementById("temperature");
-    if (!sanitize_temperature(temperature.value)) {
+    var forecast = document.getElementById("forecast");
+    if (!sanitize_temperature(temperature.value, forecast.value)) {
       debug_log("temperature sanitization failed");
       markRed(temperature);
+      document.getElementById("temperature-range-error").style.display = 'block';
       return;
     } else {
       debug_log("temperature sanitization passed");
