@@ -88,10 +88,7 @@ function sendMessageToTabs(tabs) {
     browser.tabs.sendMessage(
       tab.id,
       msg
-    ).then(response => {
-      debug_log("Got message from the content script:");
-      show_response_in_sidebar(response);
-    }).catch(onError);
+    );
   }
 }
 

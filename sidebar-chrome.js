@@ -1,5 +1,11 @@
 function handleMessage(request, sender, sendResponse) {
-  show_response_in_sidebar(request);
+  try {
+    debug_log("Got message in chrome sidebar script");
+    show_response_in_sidebar(request);
+  } catch (e) {
+    debug_log(e);
+    debug_file();
+  }
 }
 
 chrome.runtime.onMessage.addListener(handleMessage);

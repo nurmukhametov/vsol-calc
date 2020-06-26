@@ -1,36 +1,48 @@
 browser.runtime.onMessage.addListener(request => {
-  forecast = request.forecast;
-  temperature = request.temperature;
-  collision = request.collision ? COLLISION_WIN : COLLISION_LOSE;
-  default_school = "sunny"; // or sunny
-  spectators_percent = request.spectators; // -1 is away
-  defense_type_result = request.defense ? DEFENSE_WIN : DEFENSE_LOOSE;
-  csv_save = request.gencsv;
+  debug_log_calc_v = "";
+  try {
+    forecast = request.forecast;
+    temperature = request.temperature;
+    collision = request.collision ? COLLISION_WIN : COLLISION_LOSE;
+    default_school = "sunny"; // or sunny
+    spectators_percent = request.spectators; // -1 is away
+    defense_type_result = request.defense ? DEFENSE_WIN : DEFENSE_LOOSE;
+    csv_save = request.gencsv;
 
-  window.calc_args = {
-    forecast: forecast,
-    temperature: temperature,
-    collision: collision,
-    default_school: default_school,
-    spectators_percent: spectators_percent,
-    defense_type_result: defense_type_result,
-    csv_save: csv_save,
-  };
+    window.calc_args = {
+      forecast: forecast,
+      temperature: temperature,
+      collision: collision,
+      default_school: default_school,
+      spectators_percent: spectators_percent,
+      defense_type_result: defense_type_result,
+      csv_save: csv_save,
+    };
 
-  window.postMessage({ type: "FROM_SCRIPT" }, "*");
+    window.postMessage({ type: "FROM_SCRIPT" }, "*");
+  } catch(e) {
+    debug_log_calc(e);
+    browser.runtime.sendMessage(debug_log_calc_v);
+  }
 });
 
 window.addEventListener("message", function(event) {
-  //We only accept messages from ourselves
-  if (event.source != window) 
-    return;
-  if (event.data.type && (event.data.type == "FROM_PAGE")) { 
-    window.wrappedJSObject = event.data;
+  try{
+    //We only accept messages from ourselves
+    if (event.source != window)
+      return;
+    if (event.data.type && (event.data.type == "FROM_PAGE")) {
+      window.wrappedJSObject = event.data;
 
-    calc_strength().then(response => {
-      browser.runtime.sendMessage(response);
-    });
-  } 
+      calc_strength().then(response => {
+        browser.runtime.sendMessage(response);
+      });
+    }
+  } catch(e) {
+    debug_log_calc("Failed to send response to sidebar");
+    debug_log_calc(e);
+    browser.runtime.sendMessage(debug_log_calc_v);
+  }
 }, false);
 
 ;(function() {
