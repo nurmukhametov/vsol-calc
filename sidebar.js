@@ -5,10 +5,9 @@ function debug_log(a) {
 }
 
 function debug_file(text) {
-  var link = document.getElementById("downloadlink");
-  link.download = "debug_log.txt";
-  link.href = make_file(debug_log_v);
-  link.style.display = 'block';
+  document.getElementById("debuglog-link").href = make_file(debug_log_v);
+  document.getElementById("debuglog").style.display = 'block';
+  markRed(document.getElementById("result"));
 }
 
 browser.storage.local.get("cache_params").then((d) => {
@@ -47,10 +46,13 @@ function show_response_in_sidebar (response) {
 
     var result = document.getElementById("result");
     result.disabled = false;
+    markMarked(result);
     result.value = response.strength;
-    result.classList.remove("pcs-input");
-    result.classList.add("calc-marked-output");
     debug_log("Show strength result");
+    if (!Number.isInteger(response.strength)) {
+      debug_log("Result strength is not a number");
+      debug_file();
+    }
   }
 }
 
@@ -93,7 +95,13 @@ function markRed(el) {
 
 function markClean(el) {
   el.classList.remove("calc-red-border");
+  el.classList.remove("calc-marked-output");
   el.classList.add("pcs-input");
+}
+
+function markMarked(el) {
+  el.classList.remove("pcs-input");
+  el.classList.add("calc-marked-output");
 }
 
 function sanitize_temperature(v) {
@@ -135,9 +143,9 @@ document.getElementById("calc-button").addEventListener("click", () => {
   debug_log_v = "";
   try {
     debug_log("click handler called");
-    document.getElementById("result").classList.remove("calc-marked-output");
-    document.getElementById("result").classList.add("pcs-input");
+    markClean(document.getElementById("result"));
     document.getElementById("downloadlink").style.display = "none";
+    document.getElementById("debuglog").style.display = 'none';
 
     var temperature = document.getElementById("temperature");
     if (!sanitize_temperature(temperature.value)) {
