@@ -60,8 +60,6 @@
   ],
 
   "permissions": [
-    "*://pcstat.ru/*",
-    "tabs",
     "declarativeContent",
     "storage"
   ],
