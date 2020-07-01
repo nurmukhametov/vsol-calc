@@ -35,6 +35,13 @@
         "weather-table.js",
         "content-firefox.js"
       ]
+    },
+    {
+      "matches": ["*://virtualsoccer.ru/roster_m.php*"],
+      "js": [
+        "browser-polyfill.js",
+        "analytics.js"
+      ]
     }
   ],
 
