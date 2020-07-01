@@ -1,30 +1,7 @@
 function onError(error) {
   console.error(`Error: ${error}`);
   console.error("Error:", error);
-//  debug_log("Received error:");
-//  debug_log(error.toString());
-//  debug_file();
 }
-
-//function process_page(response) {
-//  console.log(response);
-//  response.text().then(function (text) {
-//    var page = document.createElement('html');
-//    page.innerHTML = text;
-//    tbls = page.getElementsByClassName("tbl");
-//    console.log(tbls);
-//    console.log("AAAA", is_home);
-//  });
-//}
-
-//function process_page (text) {
-//  var page = document.createElement('html');
-//  page.innerHTML = text;
-//  tbls = page.getElementsByClassName("tbl");
-//  console.log(tbls);
-//  console.log("AAAA", is_home);
-//  return 4;
-//}
 
 function get_fwds (url, is_home, cell) {
   fetch(url).then(response => response.text()).then(function (text) {
@@ -46,19 +23,18 @@ function get_fwds (url, is_home, cell) {
         continue;
       }
       var position = span[0].innerText;
-      console.log(position);
       switch (position) {
-      case "LW":
-      case "LF":
-      case "CF":
-      case "ST":
-      case "RW":
-      case "RF":
-      case "AM":
-        fwds += 1;
-        break;
-      default:
-        break;
+        case "LW":
+        case "LF":
+        case "CF":
+        case "ST":
+        case "RW":
+        case "RF":
+        case "AM":
+          fwds += 1;
+          break;
+        default:
+          break;
       }
     }
     cell.innerHTML = fwds;
@@ -70,8 +46,6 @@ function get_fwds (url, is_home, cell) {
   }).catch(onError);
 }
 
-//console.log(document.getElementsByClassName("tbl")[1].rows);
-
 game_table =  document.getElementsByClassName("tbl")[1];
 hdr_row = game_table.rows[0];
 hdr_td = hdr_row.insertCell(-1)
@@ -82,15 +56,8 @@ for (var i = 1; i < game_table.rows.length; i++) {
   row = game_table.rows[i];
   columns = row.getElementsByTagName("td");
   is_home_side = columns[5].innerText == "Д";
-//  console.log(is_home_side);
   game_td = columns[10];
   game_href = game_td.getElementsByTagName("a")[0].href;
-//  console.log(game_href);
-//  fetch(game_href).then(process_page).catch(onError);
-//  fetch(game_href).then(response => response.text())
-//                  .then(process_page).catch(onError);
   cell = row.insertCell(-1);
   get_fwds(game_href, is_home_side, cell);
-  console.log("BBBB");
-//  row.insertCell(-1).innerHTML = "3-4-4";
 }
