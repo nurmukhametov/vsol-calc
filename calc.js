@@ -808,7 +808,7 @@ function create_scheme () {
         all[m].push("CDl"); all[m].push("CDr"); 
       } else {
         console.assert(cds.length == 1, "CDS length 1 DMs");
-        all["CD"].push(m); all[m].push("CM");
+        all["CD"].push(m); all[m].push("CD");
       }
     } else if (bmd.length == 0) {
     } else {
