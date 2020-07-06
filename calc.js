@@ -1179,7 +1179,7 @@ function calc_strength() {
     debug_log_calc("captain_ds calculated");
     var gamestyle_ds = get_gamestyle_ds (rs);
     debug_log_calc("gamestyle_ds calculated");
-    var result_s = almost_s + kibonus_ds + leader_ds + captain_ds;
+    var result_s = almost_s + kibonus_ds + leader_ds + captain_ds + gamestyle_ds;
 
     debug_log_calc("result_s calculated");
 
