@@ -46,7 +46,27 @@ function get_fwds (url, is_home, cell) {
   }).catch(onError);
 }
 
-game_table =  document.getElementsByClassName("tbl")[1];
+ads = document.createElement('iframe');
+ads.src = "http://pcstat.ru/banner"
+ads.style="display: block"
+ads.height = 160;
+ads.width = 500;
+ads.style.backgroundColor = "white"
+ads.sandbox="allow-popups allow-scripts"
+season_table = document.getElementsByClassName("tbl")[0];
+pre_ads_row = season_table.getElementsByTagName("tbody")[0].insertRow(-1);
+pre_ads_cell = pre_ads_row.insertCell(0);
+pre_ads_cell.colSpan = 8;
+pre_ads_cell.appendChild(document.createTextNode(" s "));
+pre_ads_row.style.backgroundColor = "#B45618"
+pre_ads_row.style.color = "#B45618"
+ads_row = season_table.getElementsByTagName("tbody")[0].insertRow(-1);
+ads_row.style.backgroundColor = "#F4F8F2"
+ads_cell = ads_row.insertCell(0);
+ads_cell.colSpan = 8;
+ads_cell.appendChild(ads);
+
+game_table = document.getElementsByClassName("tbl")[1];
 hdr_row = game_table.rows[0];
 hdr_td = hdr_row.insertCell(-1)
 hdr_td.innerHTML = "<b>Нпд</b>";
