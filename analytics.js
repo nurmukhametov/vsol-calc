@@ -47,7 +47,7 @@ function get_fwds (url, is_home, cell) {
 }
 
 ads = document.createElement('iframe');
-ads.src = "http://pcstat.ru/banner"
+ads.src = "https://pcstat.ru/banner"
 ads.style="display: block"
 ads.height = 160;
 ads.width = 500;
@@ -77,7 +77,11 @@ for (var i = 1; i < game_table.rows.length; i++) {
   columns = row.getElementsByTagName("td");
   is_home_side = columns[5].innerText == "Д";
   game_td = columns[10];
-  game_href = game_td.getElementsByTagName("a")[0].href;
+  a_ = game_td.getElementsByTagName("a")[0]
+  if (!a_) {
+    break;
+  }
+  game_href = a_.href;
   cell = row.insertCell(-1);
   get_fwds(game_href, is_home_side, cell);
 }
