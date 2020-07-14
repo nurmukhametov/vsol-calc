@@ -3,16 +3,17 @@ function onError(error) {
   console.error("Error:", error);
 }
 
+const parser = new DOMParser();
+
 function get_fwds (url, is_home, cell) {
   fetch(url).then(response => response.text()).then(function (text) {
     console.log("AAAA", url, is_home);
-    var page = document.createElement('html');
-    page.innerHTML = text;
+    page = parser.parseFromString(text, "text/html");
     tbls = page.getElementsByClassName("tbl");
     var tbl = is_home ? tbls[0] : tbls[1];
     var rows = tbl.getElementsByTagName("tr");
     if (rows.length < 16) {
-      cell.innerHTML = "N/A";
+      cell.appendChild(document.createTextNode("N/A"));
       return;
     }
     var fwds = 0;
@@ -37,7 +38,7 @@ function get_fwds (url, is_home, cell) {
           break;
       }
     }
-    cell.innerHTML = fwds;
+    cell.appendChild(document.createTextNode("" + fwds));
     if (fwds > 3) {
       cell.style.backgroundColor = "#ffe0e0";
     } else {
