@@ -42,6 +42,13 @@
         "browser-polyfill.js",
         "analytics.js"
       ]
+    },
+    {
+      "matches": ["*://virtualsoccer.ru/player.php*"],
+      "js": [
+        "browser-polyfill.js",
+        "fatigue.js"
+      ]
     }
   ],
 
