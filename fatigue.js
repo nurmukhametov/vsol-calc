@@ -283,11 +283,7 @@ async function main() {
 }
 
 function add_buttons() {
-  ads = document.createElement('iframe');
-  ads.src = "https://pcstat.ru/banner"
-  ads.style="display: block"
-  ads.height = 160;
-  ads.width = 500;
+  ads = document.createElement('div');
   ads.style.backgroundColor = "white"
   ads.sandbox="allow-popups allow-scripts"
 
