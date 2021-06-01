@@ -47,11 +47,7 @@ function get_fwds (url, is_home, cell) {
   }).catch(onError);
 }
 
-ads = document.createElement('iframe');
-ads.src = "https://pcstat.ru/banner"
-ads.style="display: block"
-ads.height = 160;
-ads.width = 500;
+ads = document.createElement('div');
 ads.style.backgroundColor = "white"
 ads.sandbox="allow-popups allow-scripts"
 season_table = document.getElementsByClassName("tbl")[0];
