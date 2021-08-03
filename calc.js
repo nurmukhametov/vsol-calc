@@ -1055,14 +1055,20 @@ function get_style_vz (sch, pid) {
 }
 
 function calc_strength() {
-  forecast = window.calc_args.forecast;
-  temperature = window.calc_args.temperature;
+  //forecast = window.calc_args.forecast;
+  //temperature = window.calc_args.temperature;
   collision = window.calc_args.collision; 
   default_school = window.calc_args.default_school;
   spectators_percent = window.calc_args.spectators_percent; 
   defense_type_result = window.calc_args.defense_type_result; 
   csv_save = window.calc_args.csv_save;
   csv_content = "";
+
+  weather_re = RegExp('.*погоды:\n(.*)\n([0-9]+)°-([0-9]+)°.*', 'i');
+  fsg0_string = document.getElementsByClassName("fsg0")[0].innerText;
+  fsg0_match = weather_re.exec(fsg0_string);
+  forecast = fsg0_match[1];
+  temperature = (parseInt(fsg0_match[2]) + parseInt(fsg0_match[3])) / 2;
 
   if (csv_save) {
     csv_content += "Forecast;" + forecast + ";\n"

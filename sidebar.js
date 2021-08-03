@@ -71,8 +71,8 @@ function onError(error) {
 function sendMessageToTabs(tabs) {
   var msg = {
         greeting: "Hi from background script",
-        forecast: document.getElementById("forecast").value,
-        temperature: parseInt(document.getElementById("temperature").value),
+        forecast: 0,
+        temperature: 0,
         collision: document.getElementById("collision").checked,
         defense: document.getElementById("defense").checked,
         spectators: parseInt(document.getElementById("spectators").value),
@@ -111,57 +111,6 @@ function markMarked(el) {
   el.classList.add("calc-marked-output");
 }
 
-function sanitize_temperature(v, f) {
-  var t = parseInt(v);
-  if (isNaN(t)) {
-    return false;
-  }
-  if (v.includes("-")) {
-    return false;
-  }
-  if (t < 0 || t > 30) {
-    return false;
-  }
-  switch (f) {
-    case 'солнечно':
-      if (t < 10 || t > 29) {
-        return false;
-      }
-      break;
-    case 'облачно':
-      if (t < 5 || t > 25) {
-        return false;
-      }
-      break;
-    case 'пасмурно':
-      if (t < 1 || t > 20) {
-        return false;
-      }
-      break;
-    case 'очень жарко':
-      if (t < 26 || t > 30) {
-        return false;
-      }
-      break;
-    case 'жарко':
-      if (t < 15 || t > 29) {
-        return false;
-      }
-      break;
-    case 'дождь':
-      if (t < 1 || t > 15) {
-        return false;
-      }
-      break;
-    case 'снег':
-      if (t < 0 || t > 4) {
-        return false;
-      }
-      break;
-  }
-  return true;
-}
-
 function sanitize_spectators(v) {
   var t = parseInt(v);
   if (isNaN(t)) {
@@ -177,9 +126,7 @@ function disable_result() {
   document.getElementById("result").disabled = true;
 }
 
-document.getElementById("temperature").addEventListener("input", disable_result);
 document.getElementById("spectators").addEventListener("input", disable_result);
-document.getElementById("forecast").addEventListener("input", disable_result);
 document.getElementById("collision").addEventListener("input", disable_result);
 document.getElementById("defense").addEventListener("input", disable_result);
 
@@ -192,18 +139,6 @@ document.getElementById("calc-button").addEventListener("click", () => {
     document.getElementById("debuglog").style.display = 'none';
     document.getElementById("temperature-range-error").style.display = 'none';
     document.getElementById("result").value = "";
-
-    var temperature = document.getElementById("temperature");
-    var forecast = document.getElementById("forecast");
-    if (!sanitize_temperature(temperature.value, forecast.value)) {
-      debug_log("temperature sanitization failed");
-      markRed(temperature);
-      document.getElementById("temperature-range-error").style.display = 'block';
-      return;
-    } else {
-      debug_log("temperature sanitization passed");
-      markClean(temperature)
-    }
 
     var spectators = document.getElementById("spectators");
     if (!sanitize_spectators(spectators.value)) {
